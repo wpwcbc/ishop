@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add item</title>
+</head>
+<body>
+<form action="." method="POST" name="ItemForm">
+    {% csrf_token %}
+    <table border="1" cellspacing="1" cellpadding="4">
+        <tr><th >Item name</th><td >{{postform.ItemName}}</td></tr>
+        <tr><th >Price</th><td >{{postform.Price}}</td></tr>
+        <tr><th >Item description</th><td >{{postform.Description}}</td></tr>
+        <tr><th >Type</th><td >{{postform.}}</td></tr>
+        <tr><th >Suggested trading location</th><td >{{postform.TradingLocation}}</td></tr>
+</body>
+</html>
