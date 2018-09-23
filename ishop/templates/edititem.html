@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+<h1>Edit your item with the form below!</h1>
+<form method="POST" name="ItemForm">
+{% csrf_token %}
+    {{ form.errors }}
+    {{ form.non_field_errors }}
+    <table border="1" cellspacing="1" cellpadding="4">
+        <tr><th >Item name</th><td >{{ itemform.Name }}</td></tr>
+        <tr><th >Price</th><td >{{ itemform.Price }}</td></td></tr>
+        <tr><th >Item description</th><td >{{ itemform.Description }}</td></td></tr>
+        <tr><th >Type</th><td >{{ itemform.Type }}</td></td></tr>
+        <tr><th >Suggested trading location</th><td >{{ itemform.TradingLocation }}</td></td></tr>
+        <tr><th >Delete?</th><td >{{ itemform.Status }}</td></tr>
+        <tr>
+            <th colspan="2" align="center">
+                <input type="submit" name="button1" id="button1" value="Submit">
+                <input type="reset" name="button2" id="button2" value="Reset">
+            </th>
+        </tr>
+    </table>
+    <h1>{{message}}</h1>
+</form>
+{% endblock %}

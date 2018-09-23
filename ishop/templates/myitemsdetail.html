@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+<body>
+<h2>
+Item name : {{ item.Name }}<br>
+Type : {{ item.Type }}<br>
+Price : ${{ item.Price }}<br>
+Item description : {{ item.Description }}<br>
+Suggested trading location : {{ item.TradingLocation }}<br>
+Launch date : {{ item.LaunchDate }}<br>
+<a href="edititem/{{item.IID}}">Edit</a>
+</h2>
+{% endblock %}

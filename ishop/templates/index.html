@@ -1,22 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ishop</title>
-</head>
-<body>
-<h2>All Items</h2>
-<table border="1" cellpadding="0" cellspacing="0">
+{% extends 'base.html' %}
+
+{%  block content %}
+<h1>All Items</h1>
+<table style="line-height:30px;" width="900" border="1" cellpadding="0" cellspacing="0">
     <th>Name</th><th>Type</th><th>Price</th><th>Seller</th><th>LaunchDate</th>
     {% for Item in Items %}
     <tr>
-        <td><a href="itemsdetail/{{Item.IID}}">{{ Item.Name }}</a></td>
-        <td>{{ Item.Type }}</td>
-        <td>{{ Item.Price }}</td>
-        <td>{{ Item.Seller.Name }}</td>
-        <td>{{ Item.LaunchDate }}</td>
+        <td><h3><a href="itemsdetail/{{Item.IID}}">{{ Item.Name }}</h3></a></td>
+        <td><h3>{{ Item.Type }}</h3></td>
+        <td><h3>${{ Item.Price }}</h3></td>
+        <td><h3>{{ Item.Seller }}</h3></td>
+        <td><h3>{{ Item.LaunchDate }}</h3></td>
     </tr>
     {% endfor %}
 </table>
-</body>
-</html>
+{% endblock %}

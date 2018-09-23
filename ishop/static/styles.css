@@ -1,0 +1,48 @@
+body{
+  background-image: url(wallpaper.png);
+  background-repeat-y: no-repeat;
+  background-size: 2000px 1000px;
+  color: black;
+}
+
+body *{
+  font-family: Courier;
+}
+
+h1, h2, h3, h4, h5{
+  font-weight: normal;
+  margin: 0;
+}
+
+a, a:hover, a:visited{
+  color: blue;
+  text-decoration: none;
+}
+
+.wrapper{
+    max-width: 1660px;
+    margin: 0 auto;
+}
+
+header{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding:10px 0;
+}
+
+nav{
+    justify-self: end;
+}
+
+nav li{
+    display: inline-block;
+    margin-left: 70px;
+}
+
+nav button{
+    background: none;
+    color: #fff
+    cursor: pointer;
+    border: 0;
+    font-size: 1em;
+}

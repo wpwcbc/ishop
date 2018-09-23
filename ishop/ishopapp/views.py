@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Item
 from .form import ItemForm
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    Items = Item.objects.all()
+    Items = Item.objects.filter(Status=False)
     return render(request, "index.html", locals())
 
 
@@ -12,36 +13,66 @@ def itemsdetail(request, IID):
     item = get_object_or_404(Item, pk=IID)
     return render(request, 'itemsdetail.html', locals())
 
-
-def add(request):
+@login_required(login_url="/ishop/login/")
+def additem(request):
     if request.method == 'POST':
-        form = ItemForm(request.POST)
-        if form.is_valid():
-            form.save()
-            ItemName = form.cleaned_data.get('Name')
-            Price = form.cleaned_data.get('Price')
-            Description = form.cleaned_data.get('Description')
-            Type = form.cleaned_data.get('Type')
-            TradingLocation = form.cleaned_data.get('TradingLocation')
-            item = Item.object.create(ItemName=ItemName, Price=Price, Description=Description
-                                      , Type=Type, TradingLocation=TradingLocation)
-            item.save()
+        itemform = ItemForm(request.POST)
+        if itemform.is_valid():
+            Name = itemform.cleaned_data['Name']
+            Price = itemform.cleaned_data['Price']
+            Description = itemform.cleaned_data['Description']
+            Type = itemform.cleaned_data['Type']
+            TradingLocation = itemform.cleaned_data['TradingLocation']
+            Seller = request.user
+            item = Item.objects.create(Name=Name, Price=Price, Description=Description, Type=Type, TradingLocation=TradingLocation, Seller=request.user)
+            message = 'Item added!'
         else:
-            message = 'Wrong!'
+            message = 'The inputs maybe invalid!'
     else:
-        form = ItemForm()
-    return render(request, 'additem.html', locals())
+        message = 'All information should be inputed!'
+        itemform = ItemForm()
+    return render(request, "additem.html", locals())
 
 
-def edit(request, IID):
+@login_required(login_url="/ishop/login/")
+def edititem(request, IID):
+    item = Item.objects.get(IID=IID)
+    if request.method == 'POST':
+        itemform = ItemForm(request.POST)
+        if itemform.is_valid():
+            #for key, value in ItemForm.cleaned_data.items():
+                #if value == '':
+                    #ItemForm.cleaned_data[key] = item.__dict__[key]
+                #else:
+                    #ItemForm.cleaned_data[key] = value
+
+            item.Name = itemform.cleaned_data['Name']
+            item.Price = itemform.cleaned_data['Price']
+            item.Description = itemform.cleaned_data['Description']
+            item.Type = itemform.cleaned_data['Type']
+            item.TradingLocation = itemform.cleaned_data['TradingLocation']
+            item.Status = itemform.cleaned_data['Status']
+            Seller = request.user
+            item.save()
+            message = 'Item edited!'
+        else:
+            message = 'The inputs maybe invalid!'
+    else:
+        message = 'All information should be inputed!'
+        itemform = ItemForm()
+    return render(request, "edititem.html", locals())
+
+@login_required(login_url="/ishop/login/")
+def myitem(request):
+    Items = Item.objects.filter(Seller=request.user, Status=False)
+    return render(request, "myitem.html", locals())
+
+
+@login_required(login_url="/ishop/login/")
+def myitemsdetail(request, IID):
     item = get_object_or_404(Item, pk=IID)
-    if item.Seller == request.user:
-        if request.method == 'POST':
-            form = ItemForm(request.POST)
-            if form.is_valid():
-                form.save()
-                ItemName = form.cleaned_data.get('Name')
-                Price = form.cleaned_data.get('Price')
-                Description = form.cleaned_data.get('Description')
-                Type = form.cleaned_data.get('Type')
-                TradingLocation = form.cleaned_data.get('TradingLocation')
+    return render(request, 'myitemsdetail.html', locals())
+
+#f
+
+

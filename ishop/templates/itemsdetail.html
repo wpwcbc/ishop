@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>item's detail</title>
-</head>
+{% extends 'base.html' %}
+
+{%  block content %}
 <body>
+<h2>
 Item name : {{ item.Name }}<br>
 Type : {{ item.Type }}<br>
-Price : {{ item.Price }}<br>
+Price : ${{ item.Price }}<br>
 Item description : {{ item.Description }}<br>
-Seller : {{ item.Seller.Name }}<br>
+Seller : {{ item.Seller }}<br>
+Seller's contact number : {{ item.Seller.Phone.ContactNo }}<br>
 Suggested trading location : {{ item.TradingLocation }}<br>
 Launch date : {{ item.LaunchDate }}<br>
-</body>
-</html>
+</h2>
+{% endblock %}

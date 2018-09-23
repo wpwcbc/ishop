@@ -1,0 +1,37 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ishop</title>
+      {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}"
+  </head>
+  <body>
+    <header class="wrapper">
+        <h10><a href="{% url 'ishop:index' %}"><img src="{% static 'ishop.png' %}" height="120" width="120"></a></h10>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                <li>
+                    <form class="logout-link" action="{% url 'acc:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+                <li><a href="{% url 'ishop:additem' %}" class="highlight">Add new item</a> </li>
+                <li><a href="{% url 'ishop:myitem'  %}" class="highlight">My items</a> </li>
+                {% else %}
+                  <li><a href="{% url 'acc:login' %}">Login</a> </li>
+                  <li><a href="{% url 'acc:signup' %}">Signup</a> </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+<div class="wrapper">
+    {%  block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
